@@ -1,35 +1,47 @@
 # 🛒 Full E-Commerce Backend (Node.js + Sequelize)
 
-A full-featured backend for an e-commerce project built with **Node.js**, **Express**, **Sequelize**, and **MySQL** (or PostgreSQL). Includes product, user, category models and seeders with realistic data.
+## Project Overview
+
+This project provides the backend for an e-commerce platform, including user management, product listings, categories, and order management. The backend is built with **Node.js**, **Express**, **Sequelize**, and uses a MySQL or PostgreSQL database.
 
 ---
 
-## 🚀 Features
+## 🏗️ Features
 
-- Sequelize ORM with migrations & seeders
-- RESTful structure
-- Realistic seeded product data (100+ items)
-- Model associations: Products → User, Categories
-- JSON support for images
-- Ready for extension with authentication, carts, orders
-
----
-
-## 📦 Project Structure
+- **User Authentication**: Basic user model for managing sellers.
+- **Product Management**: Products with categories, stock, price, and images.
+- **Database**: Sequelize ORM with migrations for database management.
+- **Seeding**: Seeder files to populate dummy data for products, categories, and users.
+- **Model Associations**: Relations between Products, Users, and Categories.
 
 ---
 
-## ⚙️ Setup Instructions
+## 🔧 Project Setup
 
-### 1. Install Dependencies
+### 1. Prerequisites
+
+Before starting, ensure that you have the following installed:
+
+- **Node.js** (>= v14.x)
+- **MySQL** or **PostgreSQL**
+- **Sequelize CLI** (installed globally or locally)
+
 
 ```bash
-npm install
-npm run dev
+npm install -g npm dev run
 ```
+Products
+GET /products
+Get a list of all products.
 
+POST /products
+Create a new product.
 
----
+GET /products/:id
+Get a specific product by ID.
 
-This README includes everything you need in a single file: setup instructions, seeder details, and project structure. You can directly copy this into your `README.md`.
+PUT /products/:id
+Update a product by ID.
 
+DELETE /products/:id
+Delete a product by ID.
