@@ -17,3 +17,19 @@ A full-featured backend for an e-commerce project built with **Node.js**, **Expr
 
 ## 📦 Project Structure
 
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Install Dependencies
+
+```bash
+npm install
+npm run dev
+
+
+
+---
+
+This README includes everything you need in a single file: setup instructions, seeder details, and project structure. You can directly copy this into your `README.md`.
+
