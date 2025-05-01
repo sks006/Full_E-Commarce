@@ -3,10 +3,10 @@ import { BarChart3, CreditCard, Loader2, Package, ShoppingCart, Users } from 'lu
 import { Card } from '@/components/ui/card';
 import { StatCard } from '@/components/common/StatCard';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { fetchProducts } from '@/features/products/productsSlice';
-import { fetchOrders } from '@/features/orders/ordersSlice';
-import { fetchCustomers } from '@/features/customers/customersSlice';
-import { fetchPayments } from '@/features/payments/paymentsSlice';
+import { fetchProducts } from '@/Slicer/products/productsSlice';
+import { fetchOrders } from '@/Slicer/orders/ordersSlice';
+import { fetchCustomers } from '@/Slicer/customers/customersSlice';
+import { fetchPayments } from '@/Slicer/payments/paymentsSlice';
 import {
   ResponsiveContainer,
   BarChart,

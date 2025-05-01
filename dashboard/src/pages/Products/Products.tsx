@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import {
      ChevronDown,
      Download,
-     Pencil,
      Loader2,
      Plus,
      Filter,
@@ -30,7 +29,7 @@ import {
      fetchProducts,
      setSelectedProduct,
      updateFilters,
-} from "@/features/products/productsSlice";
+} from "@/Slicer/products/productsSlice";
 import {
      Dialog,
      DialogContent,
@@ -76,7 +75,7 @@ export function Products() {
      };
 
      return (
-          <div className='space-y-6'>
+          <div className='space-y-6 w-'>
                <div className='flex items-center justify-between'>
                     <h1 className='text-3xl font-bold tracking-tight'>
                          Products
@@ -188,13 +187,17 @@ export function Products() {
                          </div>
 
                          <DataTable
-                              data={items}
+
+                              data={Array.isArray(items) ? items.map(item => ({
+                                   ...item,
+                                   id: item.id.toString(),
+                              })) : []}
                               columns={[
                                    {
                                         header: "Name",
                                         accessorKey: "name",
                                    },
-                                 
+
                                    {
                                         header: "Price",
                                         accessorKey: "price",
@@ -207,14 +210,13 @@ export function Products() {
                                         cell: (product) => (
                                              <div className='flex items-center gap-2'>
                                                   <div
-                                                       className={`w-3 h-3 rounded-full ${
-                                                            product.stock > 50
+                                                       className={`w-3 h-3 rounded-full ${product.stock > 50
                                                                  ? "bg-emerald-500"
                                                                  : product.stock >
-                                                                   10
-                                                                 ? "bg-amber-500"
-                                                                 : "bg-rose-500"
-                                                       }`}
+                                                                      10
+                                                                      ? "bg-amber-500"
+                                                                      : "bg-rose-500"
+                                                            }`}
                                                   />
                                                   <span>{product.stock}</span>
                                              </div>
@@ -228,7 +230,7 @@ export function Products() {
                                         header: "Category",
                                         accessorKey: "categoryId",
                                         cell: (product) =>
-                                             `Category #${product.categoryId}`,
+                                             `Category #${product.category_id}`,
                                    },
                                    {
                                         header: "Actions",
@@ -259,7 +261,13 @@ export function Products() {
                                         ),
                                    },
                               ]}
-                              onRowClick={handleRowClick}
+                              onRowClick={(item) =>
+                                   handleRowClick({
+                                        ...item,
+                                        id: Number(item.id),
+                                   })
+
+                              }
                          />
                     </CardContent>
                </Card>
@@ -326,7 +334,7 @@ export function Products() {
                                                   <p className='text-lg'>
                                                        Category #
                                                        {
-                                                            selectedProduct.categoryId
+                                                            selectedProduct.category_id
                                                        }
                                                   </p>
                                              </div>
@@ -361,24 +369,23 @@ export function Products() {
                                                   </h3>
                                                   <div className='flex items-center gap-2'>
                                                        <div
-                                                            className={`w-3 h-3 rounded-full ${
-                                                                 selectedProduct.stock >
-                                                                 50
+                                                            className={`w-3 h-3 rounded-full ${selectedProduct.stock >
+                                                                      50
                                                                       ? "bg-emerald-500"
                                                                       : selectedProduct.stock >
-                                                                        10
-                                                                      ? "bg-amber-500"
-                                                                      : "bg-rose-500"
-                                                            }`}
+                                                                           10
+                                                                           ? "bg-amber-500"
+                                                                           : "bg-rose-500"
+                                                                 }`}
                                                        />
                                                        <span>
                                                             {selectedProduct.stock >
-                                                            50
+                                                                 50
                                                                  ? "In Stock"
                                                                  : selectedProduct.stock >
-                                                                   10
-                                                                 ? "Low Stock"
-                                                                 : "Critical Stock"}
+                                                                      10
+                                                                      ? "Low Stock"
+                                                                      : "Critical Stock"}
                                                        </span>
                                                   </div>
                                              </div>
@@ -389,7 +396,7 @@ export function Products() {
                                                   <p className='text-lg'>
                                                        Seller #
                                                        {
-                                                            selectedProduct.sellerId
+                                                            selectedProduct.seller_id
                                                        }
                                                   </p>
                                              </div>

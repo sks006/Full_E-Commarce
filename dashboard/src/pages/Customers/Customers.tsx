@@ -30,7 +30,7 @@ import {
   fetchCustomers, 
   setSelectedCustomer, 
   updateFilters 
-} from '@/features/customers/customersSlice';
+} from '@/Slicer/customers/customersSlice';
 import { 
   Dialog, 
   DialogContent, 

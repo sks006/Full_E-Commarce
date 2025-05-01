@@ -28,9 +28,8 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  display: block;
+  min-width: fit-content;
   min-height: 100vh;
 }
 
@@ -134,4 +133,7 @@ button:focus-visible {
   body {
     @apply bg-background text-foreground;
   }
+}
+@media screen {
+  
 }

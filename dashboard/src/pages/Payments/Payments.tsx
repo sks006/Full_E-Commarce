@@ -28,7 +28,7 @@ import {
   fetchPayments, 
   setSelectedPayment, 
   updateFilters 
-} from '@/features/payments/paymentsSlice';
+} from '@/Slicer/payments/paymentsSlice';
 import { 
   Dialog, 
   DialogContent, 

@@ -10,7 +10,7 @@ export function Header() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-6 ">
       <div className="flex flex-1 items-center gap-4 md:gap-8">
         <form className="hidden flex-1 sm:flex sm:max-w-[400px]">
           <div className="relative flex-1">

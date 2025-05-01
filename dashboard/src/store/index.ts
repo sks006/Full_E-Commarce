@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import productsReducer from '@/features/products/productsSlice';
-import ordersReducer from '@/features/orders/ordersSlice';
-import customersReducer from '@/features/customers/customersSlice';
-import paymentsReducer from '@/features/payments/paymentsSlice';
-import authReducer from '@/features/auth/authSlice';
+import productsReducer from '@/Slicer/products/productsSlice';
+import ordersReducer from '@/Slicer/orders/ordersSlice';
+import customersReducer from '@/Slicer/customers/customersSlice';
+import paymentsReducer from '@/Slicer/payments/paymentsSlice';
+import authReducer from '@/Slicer/auth/authSlice';
 
 export const store = configureStore({
   reducer: {

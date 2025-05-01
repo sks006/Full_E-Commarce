@@ -29,7 +29,7 @@ import {
   setSelectedOrder, 
   updateFilters,
   updateOrderStatus 
-} from '@/features/orders/ordersSlice';
+} from '@/Slicer/orders/ordersSlice';
 import { 
   Dialog, 
   DialogContent, 

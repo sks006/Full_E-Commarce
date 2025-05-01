@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { useAppDispatch } from '@/store/hooks';
-import { logout } from '@/features/auth/authSlice';
+import { logout } from '@/Slicer/auth/authSlice';
 
 interface SidebarNavProps {
   isCollapsed: boolean;

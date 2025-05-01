@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
-app.use("/api",productRouter)
+app.use("/products",productRouter)
 
 app.get("/", (req, res) => {
      res.status(200).json({
