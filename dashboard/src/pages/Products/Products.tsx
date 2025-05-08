@@ -1,15 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/**
- * eslint-disable @typescript-eslint/no-unused-vars
- *
- * @format
- */
+/** @format */
 
 import { useEffect, useState } from "react";
 import {
      ChevronDown,
      Download,
-     Pencil,
      Loader2,
      Plus,
      Filter,
@@ -24,13 +18,13 @@ import {
      DropdownMenuItem,
      DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DataTable } from "@/components/common/DataTable";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
      fetchProducts,
      setSelectedProduct,
      updateFilters,
-} from "@/features/products/productsSlice";
+     deleteProduct,
+} from "@/slicer/products/productsSlice";
 import {
      Dialog,
      DialogContent,
@@ -48,6 +42,10 @@ export function Products() {
           (state) => state.products,
      );
      const [productDetailsOpen, setProductDetailsOpen] = useState(false);
+     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+     const [productToDelete, setProductToDelete] = useState<string | null>(
+          null,
+     );
 
      useEffect(() => {
           if (status === "idle") {
@@ -60,13 +58,19 @@ export function Products() {
           setProductDetailsOpen(true);
      };
 
-     if (status === "loading") {
-          return (
-               <div className='flex items-center justify-center h-[calc(100vh-8rem)]'>
-                    <Loader2 className='h-8 w-8 animate-spin text-primary' />
-               </div>
-          );
-     }
+     const handleDeleteClick = (e: React.MouseEvent, productId: string) => {
+          e.stopPropagation();
+          setProductToDelete(productId);
+          setIsDeleteDialogOpen(true);
+     };
+
+     const confirmDelete = () => {
+          if (productToDelete) {
+               dispatch(deleteProduct(productToDelete));
+               setIsDeleteDialogOpen(false);
+               setProductToDelete(null);
+          }
+     };
 
      const formatCurrency = (amount: number) => {
           return new Intl.NumberFormat("en-US", {
@@ -74,6 +78,26 @@ export function Products() {
                currency: "USD",
           }).format(amount);
      };
+
+     const getStockStatusClass = (stock: number) => {
+          if (stock > 50) return "bg-emerald-500";
+          if (stock > 10) return "bg-amber-500";
+          return "bg-rose-500";
+     };
+
+     const getStockStatusText = (stock: number) => {
+          if (stock > 50) return "In Stock";
+          if (stock > 10) return "Low Stock";
+          return "Critical Stock";
+     };
+
+     if (status === "loading" && items.length === 0) {
+          return (
+               <div className='flex items-center justify-center h-[calc(100vh-8rem)]'>
+                    <Loader2 className='h-8 w-8 animate-spin text-primary' />
+               </div>
+          );
+     }
 
      return (
           <div className='space-y-6'>
@@ -187,83 +211,111 @@ export function Products() {
                               </div>
                          </div>
 
-                         <DataTable
-                              data={items}
-                              columns={[
-                                   {
-                                        header: "Name",
-                                        accessorKey: "name",
-                                   },
-                                 
-                                   {
-                                        header: "Price",
-                                        accessorKey: "price",
-                                        cell: (product) =>
-                                             formatCurrency(product.price),
-                                   },
-                                   {
-                                        header: "Stock",
-                                        accessorKey: "stock",
-                                        cell: (product) => (
-                                             <div className='flex items-center gap-2'>
-                                                  <div
-                                                       className={`w-3 h-3 rounded-full ${
-                                                            product.stock > 50
-                                                                 ? "bg-emerald-500"
-                                                                 : product.stock >
-                                                                   10
-                                                                 ? "bg-amber-500"
-                                                                 : "bg-rose-500"
-                                                       }`}
-                                                  />
-                                                  <span>{product.stock}</span>
-                                             </div>
-                                        ),
-                                   },
-                                   {
-                                        header: "Brand",
-                                        accessorKey: "brand",
-                                   },
-                                   {
-                                        header: "Category",
-                                        accessorKey: "categoryId",
-                                        cell: (product) =>
-                                             `Category #${product.categoryId}`,
-                                   },
-                                   {
-                                        header: "Actions",
-                                        accessorKey: "actions",
-                                        cell: (product) => (
-                                             <div className='flex items-center gap-2'>
-                                                  <Button
-                                                       variant='default'
-                                                       size='default'
-                                                       onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            // Edit logic
-                                                       }}>
-                                                       <Plus className='mr-2 h-4 w-4' />
-                                                       Create
-                                                  </Button>
-                                                  <Button
-                                                       variant='destructive'
-                                                       size='default'
-                                                       onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            // Delete logic
-                                                       }}>
-                                                       <Trash2 className='mr-2 h-4 w-4' />
-                                                       Delete
-                                                  </Button>
-                                             </div>
-                                        ),
-                                   },
-                              ]}
-                              onRowClick={handleRowClick}
-                         />
+                         {/* Table implementation without DataTable component */}
+                         <div className='rounded-md border'>
+                              <div className='relative w-full overflow-auto'>
+                                   <table className='w-full caption-bottom text-sm'>
+                                        <thead className='[&_tr]:border-b'>
+                                             <tr className='border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted'>
+                                                  <th className='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>
+                                                       Name
+                                                  </th>
+                                                  <th className='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>
+                                                       Price
+                                                  </th>
+                                                  <th className='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>
+                                                       Stock
+                                                  </th>
+                                                  <th className='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>
+                                                       Brand
+                                                  </th>
+                                                  <th className='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>
+                                                       Category
+                                                  </th>
+                                                  <th className='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>
+                                                       Actions
+                                                  </th>
+                                             </tr>
+                                        </thead>
+                                        <tbody className='[&_tr:last-child]:border-0'>
+                                             {items.map((product) => (
+                                                  <tr
+                                                       key={product.id}
+                                                       className='border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted cursor-pointer'
+                                                       onClick={() =>
+                                                            handleRowClick(
+                                                                 product,
+                                                            )
+                                                       }>
+                                                       <td className='p-4 align-middle'>
+                                                            {product.name}
+                                                       </td>
+                                                       <td className='p-4 align-middle'>
+                                                            {formatCurrency(
+                                                                 product.price,
+                                                            )}
+                                                       </td>
+                                                       <td className='p-4 align-middle'>
+                                                            <div className='flex items-center gap-2'>
+                                                                 <div
+                                                                      className={`w-3 h-3 rounded-full ${getStockStatusClass(
+                                                                           product.stock,
+                                                                      )}`}
+                                                                 />
+                                                                 <span>
+                                                                      {
+                                                                           product.stock
+                                                                      }
+                                                                 </span>
+                                                            </div>
+                                                       </td>
+                                                       <td className='p-4 align-middle'>
+                                                            {product.brand}
+                                                       </td>
+                                                       <td className='p-4 align-middle'>
+                                                            Category #
+                                                            {product.categoryId}
+                                                       </td>
+                                                       <td className='p-4 align-middle'>
+                                                            <div className='flex items-center gap-2'>
+                                                                 <Button
+                                                                      variant='default'
+                                                                      size='sm'
+                                                                      onClick={(
+                                                                           e,
+                                                                      ) => {
+                                                                           e.stopPropagation();
+                                                                           // Edit logic
+                                                                      }}>
+                                                                      <Plus className='mr-2 h-4 w-4' />
+                                                                      Create
+                                                                 </Button>
+                                                                 <Button
+                                                                      variant='destructive'
+                                                                      size='sm'
+                                                                      onClick={(
+                                                                           e,
+                                                                      ) =>
+                                                                           handleDeleteClick(
+                                                                                e,
+                                                                                product.id,
+                                                                           )
+                                                                      }>
+                                                                      <Trash2 className='mr-2 h-4 w-4' />
+                                                                      Delete
+                                                                 </Button>
+                                                            </div>
+                                                       </td>
+                                                  </tr>
+                                             ))}
+                                        </tbody>
+                                   </table>
+                              </div>
+                         </div>
                     </CardContent>
                </Card>
 
+               {/* Product Details Dialog */}
                {selectedProduct && (
                     <Dialog
                          open={productDetailsOpen}
@@ -361,24 +413,14 @@ export function Products() {
                                                   </h3>
                                                   <div className='flex items-center gap-2'>
                                                        <div
-                                                            className={`w-3 h-3 rounded-full ${
-                                                                 selectedProduct.stock >
-                                                                 50
-                                                                      ? "bg-emerald-500"
-                                                                      : selectedProduct.stock >
-                                                                        10
-                                                                      ? "bg-amber-500"
-                                                                      : "bg-rose-500"
-                                                            }`}
+                                                            className={`w-3 h-3 rounded-full ${getStockStatusClass(
+                                                                 selectedProduct.stock,
+                                                            )}`}
                                                        />
                                                        <span>
-                                                            {selectedProduct.stock >
-                                                            50
-                                                                 ? "In Stock"
-                                                                 : selectedProduct.stock >
-                                                                   10
-                                                                 ? "Low Stock"
-                                                                 : "Critical Stock"}
+                                                            {getStockStatusText(
+                                                                 selectedProduct.stock,
+                                                            )}
                                                        </span>
                                                   </div>
                                              </div>
@@ -429,6 +471,28 @@ export function Products() {
                          </DialogContent>
                     </Dialog>
                )}
+
+               {/* Delete Confirmation Dialog */}
+               <Dialog
+                    open={isDeleteDialogOpen}
+                    onOpenChange={setIsDeleteDialogOpen}>
+                    <DialogContent>
+                         <DialogHeader>
+                              <DialogTitle>Confirm Deletion</DialogTitle>
+                         </DialogHeader>
+                         <p>Are you sure you want to delete this product?</p>
+                         <DialogFooter>
+                              <DialogClose asChild>
+                                   <Button variant='outline'>Cancel</Button>
+                              </DialogClose>
+                              <Button
+                                   variant='destructive'
+                                   onClick={confirmDelete}>
+                                   Delete
+                              </Button>
+                         </DialogFooter>
+                    </DialogContent>
+               </Dialog>
           </div>
      );
 }
