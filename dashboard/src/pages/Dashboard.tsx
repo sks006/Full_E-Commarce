@@ -1,6 +1,18 @@
+<<<<<<< HEAD
 /** @format */
 
 import { useEffect } from "react";
+=======
+import { useEffect } from 'react';
+import { BarChart3, CreditCard, Loader2, Package, ShoppingCart, Users } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { StatCard } from '@/components/common/StatCard';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { fetchProducts } from '@/Slicer/products/productsSlice';
+import { fetchOrders } from '@/Slicer/orders/ordersSlice';
+import { fetchCustomers } from '@/Slicer/customers/customersSlice';
+import { fetchPayments } from '@/Slicer/payments/paymentsSlice';
+>>>>>>> 0556007ae29593ba7b6666ed30cb0530f0cc0c59
 import {
      BarChart3,
      CreditCard,

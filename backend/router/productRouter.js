@@ -4,7 +4,7 @@ const router = Router();
 const {
      index,
      getById,
-     create,
+     save,
      updateById,
      deleteById,
      deleteProductsImages,
@@ -17,23 +17,23 @@ const {
 
 const { upload } = require("../middleware/uploadsMiddleware.js");
 
-router.get("/products", index);
-router.get("/products/:id", getById);
+router.get("/", index);
+router.get("/getById/:id", getById);
 router.post(
-     "/products",
+     "/save",
      upload.array("images", 5),
      productValidationRules,
      validate,
-     create,
+     save,
 );
 router.put(
-     "/products/:id",
+     "/updateById/:id",
      upload.array("images", 5),
      productValidationRules,
      validate,
      updateById,
 );
-router.delete("/products/:id/images", deleteProductsImages);
-router.delete("/products/:id", deleteById);
+router.delete("/deleteProductsImages/:id/images", deleteProductsImages);
+router.delete("/deleteById/:id", deleteById);
 
 module.exports = router;

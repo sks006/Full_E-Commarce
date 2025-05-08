@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import {
+<<<<<<< HEAD
      ChevronDown,
      Download,
      Loader2,
@@ -14,6 +15,29 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+=======
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { DataTable } from '@/components/common/DataTable';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { 
+  fetchCustomers, 
+  setSelectedCustomer, 
+  updateFilters 
+} from '@/Slicer/customers/customersSlice';
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle,
+  DialogFooter,
+  DialogClose
+} from '@/components/ui/dialog';
+>>>>>>> 0556007ae29593ba7b6666ed30cb0530f0cc0c59
 import {
      DropdownMenu,
      DropdownMenuContent,

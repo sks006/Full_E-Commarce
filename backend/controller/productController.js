@@ -32,7 +32,7 @@ const getById = async (req, res) => {
      }
 };
 
-const create = async (req, res) => {
+const save = async (req, res) => {
      try {
           const { name, description, price, stock, brand, category_id,seller_id } =
                req.body;
@@ -220,7 +220,7 @@ const deleteById = async (req, res) => {
 module.exports = {
      index,
      getById,
-     create,
+     save,
      updateById,
      deleteProductsImages,
      deleteById,

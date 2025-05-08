@@ -5,11 +5,11 @@ import { Toaster } from '@/components/ui/toaster';
 
 export function DashboardLayout() {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex  min-h-screen">
       <Sidebar />
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 ">
         <Header />
-        <main className="flex-1 p-6 lg:w-full">
+        <main className="flex p-6 w-fit">
           <Outlet />
         </main>
         <Toaster />

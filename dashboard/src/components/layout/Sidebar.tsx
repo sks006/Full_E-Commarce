@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import {
+<<<<<<< HEAD
      LayoutDashboard,
      Package,
      ShoppingCart,
@@ -23,6 +24,25 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { useAppDispatch } from "@/store/hooks";
 import { logout } from "@/auth/authSlice";
+=======
+  LayoutDashboard,
+  Package,
+  ShoppingCart,
+  Users,
+  CreditCard,
+  Settings,
+  BarChart,
+  Tag,
+  Ticket,
+  ChevronLeft,
+  ChevronRight,
+  LogOut,
+  Store,
+} from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import { useAppDispatch } from '@/store/hooks';
+import { logout } from '@/Slicer/auth/authSlice';
+>>>>>>> 0556007ae29593ba7b6666ed30cb0530f0cc0c59
 
 interface SidebarNavProps {
      isCollapsed: boolean;

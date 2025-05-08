@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import {
+<<<<<<< HEAD
      ChevronDown,
      Download,
      FileText,
@@ -43,6 +44,38 @@ import {
 } from "@/components/ui/select";
 import { Payment } from "@/types/schema";
 import { format } from "date-fns";
+=======
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { StatusBadge } from '@/components/common/StatusBadge';
+import { DataTable } from '@/components/common/DataTable';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { 
+  fetchPayments, 
+  setSelectedPayment, 
+  updateFilters 
+} from '@/Slicer/payments/paymentsSlice';
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle,
+  DialogFooter,
+  DialogClose
+} from '@/components/ui/dialog';
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from '@/components/ui/select';
+import { Payment } from '@/types/schema';
+import { format } from 'date-fns';
+>>>>>>> 0556007ae29593ba7b6666ed30cb0530f0cc0c59
 
 export function Payments() {
      const dispatch = useAppDispatch();

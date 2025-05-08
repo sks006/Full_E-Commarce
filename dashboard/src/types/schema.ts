@@ -43,19 +43,22 @@ export interface Category {
 }
 
 export interface Product {
-  id: string;
-  sellerId: string;
-  categoryId: string;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  brand?: string;
-  createdAt: string;
+  id: number; // Sequelize.INTEGER, autoIncremented
+  seller_id: number; // Sequelize.INTEGER
+  category_id: number; // Sequelize.INTEGER
+  name: string; // Sequelize.STRING
+  description: string; // Sequelize.TEXT
+  price: number; // Sequelize.INTEGER
+  stock: number; // Sequelize.INTEGER
+  brand: string; // Sequelize.STRING (optional if allowNull, but required in your current backend)
+  images: string; // Sequelize.STRING — assumed to be a URL or comma-separated
+  createdAt: string; // Sequelize.DATE (returned as ISO string in JSON)
+  updatedAt: string; // Sequelize.DATE (same)
+
   seller?: Seller;
   category?: Category;
-  images?: ProductImage[];
 }
+
 
 export interface ProductImage {
   id: string;
