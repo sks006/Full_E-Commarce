@@ -23,12 +23,8 @@ import {
      fetchProducts,
      setSelectedProduct,
      updateFilters,
-<<<<<<< HEAD
      deleteProduct,
 } from "@/slicer/products/productsSlice";
-=======
-} from "@/Slicer/products/productsSlice";
->>>>>>> 0556007ae29593ba7b6666ed30cb0530f0cc0c59
 import {
      Dialog,
      DialogContent,
@@ -47,12 +43,15 @@ export function Products() {
      );
      const [productDetailsOpen, setProductDetailsOpen] = useState(false);
      const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-     const [productToDelete, setProductToDelete] = useState<string | null>(
+     const [productToDelete, setProductToDelete] = useState<number | null>(
           null,
      );
 
      useEffect(() => {
           if (status === "idle") {
+               console.log(
+                    "✅ useEffect triggered — status is idle, dispatching fetchProducts",
+               );
                dispatch(fetchProducts());
           }
      }, [dispatch, status]);
@@ -62,9 +61,9 @@ export function Products() {
           setProductDetailsOpen(true);
      };
 
-     const handleDeleteClick = (e: React.MouseEvent, productId: string) => {
+     const handleDeleteClick = (e: React.MouseEvent, product_id: number) => {
           e.stopPropagation();
-          setProductToDelete(productId);
+          setProductToDelete(product_id);
           setIsDeleteDialogOpen(true);
      };
 
@@ -104,7 +103,7 @@ export function Products() {
      }
 
      return (
-          <div className='space-y-6 w-'>
+          <div className='space-y-6'>
                <div className='flex items-center justify-between'>
                     <h1 className='text-3xl font-bold tracking-tight'>
                          Products
@@ -215,7 +214,6 @@ export function Products() {
                               </div>
                          </div>
 
-<<<<<<< HEAD
                          {/* Table implementation without DataTable component */}
                          <div className='rounded-md border'>
                               <div className='relative w-full overflow-auto'>
@@ -279,7 +277,9 @@ export function Products() {
                                                        </td>
                                                        <td className='p-4 align-middle'>
                                                             Category #
-                                                            {product.categoryId}
+                                                            {
+                                                                 product.category_id
+                                                            }
                                                        </td>
                                                        <td className='p-4 align-middle'>
                                                             <div className='flex items-center gap-2'>
@@ -317,91 +317,6 @@ export function Products() {
                                    </table>
                               </div>
                          </div>
-=======
-                         <DataTable
-
-                              data={Array.isArray(items) ? items.map(item => ({
-                                   ...item,
-                                   id: item.id.toString(),
-                              })) : []}
-                              columns={[
-                                   {
-                                        header: "Name",
-                                        accessorKey: "name",
-                                   },
-
-                                   {
-                                        header: "Price",
-                                        accessorKey: "price",
-                                        cell: (product) =>
-                                             formatCurrency(product.price),
-                                   },
-                                   {
-                                        header: "Stock",
-                                        accessorKey: "stock",
-                                        cell: (product) => (
-                                             <div className='flex items-center gap-2'>
-                                                  <div
-                                                       className={`w-3 h-3 rounded-full ${product.stock > 50
-                                                                 ? "bg-emerald-500"
-                                                                 : product.stock >
-                                                                      10
-                                                                      ? "bg-amber-500"
-                                                                      : "bg-rose-500"
-                                                            }`}
-                                                  />
-                                                  <span>{product.stock}</span>
-                                             </div>
-                                        ),
-                                   },
-                                   {
-                                        header: "Brand",
-                                        accessorKey: "brand",
-                                   },
-                                   {
-                                        header: "Category",
-                                        accessorKey: "categoryId",
-                                        cell: (product) =>
-                                             `Category #${product.category_id}`,
-                                   },
-                                   {
-                                        header: "Actions",
-                                        accessorKey: "actions",
-                                        cell: (product) => (
-                                             <div className='flex items-center gap-2'>
-                                                  <Button
-                                                       variant='default'
-                                                       size='default'
-                                                       onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            // Edit logic
-                                                       }}>
-                                                       <Plus className='mr-2 h-4 w-4' />
-                                                       Create
-                                                  </Button>
-                                                  <Button
-                                                       variant='destructive'
-                                                       size='default'
-                                                       onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            // Delete logic
-                                                       }}>
-                                                       <Trash2 className='mr-2 h-4 w-4' />
-                                                       Delete
-                                                  </Button>
-                                             </div>
-                                        ),
-                                   },
-                              ]}
-                              onRowClick={(item) =>
-                                   handleRowClick({
-                                        ...item,
-                                        id: Number(item.id),
-                                   })
-
-                              }
-                         />
->>>>>>> 0556007ae29593ba7b6666ed30cb0530f0cc0c59
                     </CardContent>
                </Card>
 
@@ -503,7 +418,6 @@ export function Products() {
                                                   </h3>
                                                   <div className='flex items-center gap-2'>
                                                        <div
-<<<<<<< HEAD
                                                             className={`w-3 h-3 rounded-full ${getStockStatusClass(
                                                                  selectedProduct.stock,
                                                             )}`}
@@ -512,25 +426,6 @@ export function Products() {
                                                             {getStockStatusText(
                                                                  selectedProduct.stock,
                                                             )}
-=======
-                                                            className={`w-3 h-3 rounded-full ${selectedProduct.stock >
-                                                                      50
-                                                                      ? "bg-emerald-500"
-                                                                      : selectedProduct.stock >
-                                                                           10
-                                                                           ? "bg-amber-500"
-                                                                           : "bg-rose-500"
-                                                                 }`}
-                                                       />
-                                                       <span>
-                                                            {selectedProduct.stock >
-                                                                 50
-                                                                 ? "In Stock"
-                                                                 : selectedProduct.stock >
-                                                                      10
-                                                                      ? "Low Stock"
-                                                                      : "Critical Stock"}
->>>>>>> 0556007ae29593ba7b6666ed30cb0530f0cc0c59
                                                        </span>
                                                   </div>
                                              </div>

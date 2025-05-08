@@ -1,18 +1,6 @@
-<<<<<<< HEAD
 /** @format */
 
 import { useEffect } from "react";
-=======
-import { useEffect } from 'react';
-import { BarChart3, CreditCard, Loader2, Package, ShoppingCart, Users } from 'lucide-react';
-import { Card } from '@/components/ui/card';
-import { StatCard } from '@/components/common/StatCard';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { fetchProducts } from '@/Slicer/products/productsSlice';
-import { fetchOrders } from '@/Slicer/orders/ordersSlice';
-import { fetchCustomers } from '@/Slicer/customers/customersSlice';
-import { fetchPayments } from '@/Slicer/payments/paymentsSlice';
->>>>>>> 0556007ae29593ba7b6666ed30cb0530f0cc0c59
 import {
      BarChart3,
      CreditCard,
@@ -41,7 +29,7 @@ import {
      Line,
 } from "recharts";
 
-// Mock data for charts
+// Mock data
 const salesData = [
      { name: "Jan", sales: 4000, orders: 240 },
      { name: "Feb", sales: 3000, orders: 198 },
@@ -93,10 +81,9 @@ export function Dashboard() {
           );
      }
 
-     // Calculate revenue from mock payments data
      const revenue = payments.items
           .filter((payment) => payment.status === "Paid")
-          .reduce((total, payment) => total + 120, 0); // Mocked average order value
+          .reduce((total) => total + 120, 0); // Mock value
 
      return (
           <div className='space-y-6'>
@@ -116,21 +103,21 @@ export function Dashboard() {
                     />
                     <StatCard
                          title='Orders'
-                         value={orders.items.length}
+                         value={orders.items?.length ?? 0}
                          icon={<ShoppingCart className='h-5 w-5' />}
                          description='Total orders'
                          trend={{ value: 8.2, isPositive: true }}
                     />
                     <StatCard
                          title='Products'
-                         value={products.items.length}
+                         value={products.items?.length ?? 0}
                          icon={<Package className='h-5 w-5' />}
                          description='Active products'
                          trend={{ value: 2.1, isPositive: false }}
                     />
                     <StatCard
                          title='Customers'
-                         value={customers.items.length}
+                         value={customers.items?.length ?? 0}
                          icon={<Users className='h-5 w-5' />}
                          description='Active customers'
                          trend={{ value: 5.7, isPositive: true }}

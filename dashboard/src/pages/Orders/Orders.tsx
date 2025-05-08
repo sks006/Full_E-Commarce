@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import {
-<<<<<<< HEAD
      ChevronDown,
      Download,
      FileBox,
@@ -20,7 +19,6 @@ import {
      DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { StatusBadge } from "@/components/common/StatusBadge";
-import { DataTable } from "@/components/common/DataTable";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
      fetchOrders,
@@ -45,39 +43,6 @@ import {
 } from "@/components/ui/select";
 import { Order } from "@/types/schema";
 import { format } from "date-fns";
-=======
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { StatusBadge } from '@/components/common/StatusBadge';
-import { DataTable } from '@/components/common/DataTable';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { 
-  fetchOrders, 
-  setSelectedOrder, 
-  updateFilters,
-  updateOrderStatus 
-} from '@/Slicer/orders/ordersSlice';
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle,
-  DialogFooter,
-  DialogClose
-} from '@/components/ui/dialog';
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from '@/components/ui/select';
-import { Order } from '@/types/schema';
-import { format } from 'date-fns';
->>>>>>> 0556007ae29593ba7b6666ed30cb0530f0cc0c59
 
 export function Orders() {
      const dispatch = useAppDispatch();
@@ -108,7 +73,7 @@ export function Orders() {
           }
      };
 
-     if (status === "loading") {
+     if (status === "loading" && items.length === 0) {
           return (
                <div className='flex items-center justify-center h-[calc(100vh-8rem)]'>
                     <Loader2 className='h-8 w-8 animate-spin text-primary' />
@@ -213,83 +178,110 @@ export function Orders() {
                               </div>
                          </div>
 
-                         <DataTable
-                              data={items}
-                              columns={[
-                                   {
-                                        header: "Order ID",
-                                        accessorKey: "id",
-                                        cell: (order) => (
-                                             <span className='font-medium'>
-                                                  #{order.id}
-                                             </span>
-                                        ),
-                                   },
-                                   {
-                                        header: "Date",
-                                        accessorKey: "createdAt",
-                                        cell: (order) =>
-                                             format(
-                                                  new Date(order.createdAt),
-                                                  "MMM dd, yyyy",
-                                             ),
-                                   },
-                                   {
-                                        header: "Status",
-                                        accessorKey: "status",
-                                        cell: (order) => (
-                                             <StatusBadge
-                                                  status={order.status}
-                                             />
-                                        ),
-                                   },
-                                   {
-                                        header: "Customer",
-                                        accessorKey: "userId",
-                                        cell: (order) =>
-                                             `Customer #${order.userId}`,
-                                   },
-                                   {
-                                        header: "Payment ID",
-                                        accessorKey: "paymentId",
-                                        cell: (order) =>
-                                             order.paymentId || "N/A",
-                                   },
-                                   {
-                                        header: "Actions",
-                                        accessorKey: "actions",
-                                        cell: (order) => (
-                                             <DropdownMenu>
-                                                  <DropdownMenuTrigger asChild>
-                                                       <Button
-                                                            variant='ghost'
-                                                            size='icon'>
-                                                            <FileBox className='h-4 w-4' />
-                                                       </Button>
-                                                  </DropdownMenuTrigger>
-                                                  <DropdownMenuContent align='end'>
-                                                       <DropdownMenuItem
-                                                            onClick={(e) => {
-                                                                 e.stopPropagation();
-                                                                 handleRowClick(
-                                                                      order,
-                                                                 );
-                                                            }}>
-                                                            View Details
-                                                       </DropdownMenuItem>
-                                                       <DropdownMenuItem>
-                                                            Print Invoice
-                                                       </DropdownMenuItem>
-                                                       <DropdownMenuItem>
-                                                            Track Shipment
-                                                       </DropdownMenuItem>
-                                                  </DropdownMenuContent>
-                                             </DropdownMenu>
-                                        ),
-                                   },
-                              ]}
-                              onRowClick={handleRowClick}
-                         />
+                         {/* Custom Table Implementation */}
+                         <div className='rounded-md border'>
+                              <div className='relative w-full overflow-auto'>
+                                   <table className='w-full caption-bottom text-sm'>
+                                        <thead className='[&_tr]:border-b'>
+                                             <tr className='border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted'>
+                                                  <th className='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>
+                                                       Order ID
+                                                  </th>
+                                                  <th className='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>
+                                                       Date
+                                                  </th>
+                                                  <th className='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>
+                                                       Status
+                                                  </th>
+                                                  <th className='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>
+                                                       Customer
+                                                  </th>
+                                                  <th className='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>
+                                                       Payment ID
+                                                  </th>
+                                                  <th className='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>
+                                                       Actions
+                                                  </th>
+                                             </tr>
+                                        </thead>
+                                        <tbody className='[&_tr:last-child]:border-0'>
+                                             {items.map((order) => (
+                                                  <tr
+                                                       key={order.id}
+                                                       className='border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted cursor-pointer'
+                                                       onClick={() =>
+                                                            handleRowClick(
+                                                                 order,
+                                                            )
+                                                       }>
+                                                       <td className='p-4 align-middle'>
+                                                            <span className='font-medium'>
+                                                                 #{order.id}
+                                                            </span>
+                                                       </td>
+                                                       <td className='p-4 align-middle'>
+                                                            {format(
+                                                                 new Date(
+                                                                      order.createdAt,
+                                                                 ),
+                                                                 "MMM dd, yyyy",
+                                                            )}
+                                                       </td>
+                                                       <td className='p-4 align-middle'>
+                                                            <StatusBadge
+                                                                 status={
+                                                                      order.status
+                                                                 }
+                                                            />
+                                                       </td>
+                                                       <td className='p-4 align-middle'>
+                                                            Customer #
+                                                            {order.userId}
+                                                       </td>
+                                                       <td className='p-4 align-middle'>
+                                                            {order.paymentId ||
+                                                                 "N/A"}
+                                                       </td>
+                                                       <td className='p-4 align-middle'>
+                                                            <DropdownMenu>
+                                                                 <DropdownMenuTrigger
+                                                                      asChild>
+                                                                      <Button
+                                                                           variant='ghost'
+                                                                           size='icon'>
+                                                                           <FileBox className='h-4 w-4' />
+                                                                      </Button>
+                                                                 </DropdownMenuTrigger>
+                                                                 <DropdownMenuContent align='end'>
+                                                                      <DropdownMenuItem
+                                                                           onClick={(
+                                                                                e,
+                                                                           ) => {
+                                                                                e.stopPropagation();
+                                                                                handleRowClick(
+                                                                                     order,
+                                                                                );
+                                                                           }}>
+                                                                           View
+                                                                           Details
+                                                                      </DropdownMenuItem>
+                                                                      <DropdownMenuItem>
+                                                                           Print
+                                                                           Invoice
+                                                                      </DropdownMenuItem>
+                                                                      <DropdownMenuItem>
+                                                                           Track
+                                                                           Shipment
+                                                                      </DropdownMenuItem>
+                                                                 </DropdownMenuContent>
+                                                            </DropdownMenu>
+                                                       </td>
+                                                  </tr>
+                                             ))}
+                                        </tbody>
+                                   </table>
+                              </div>
+                         </div>
                     </CardContent>
                </Card>
 
@@ -386,7 +378,6 @@ export function Orders() {
                                         Items
                                    </h3>
                                    <div className='border rounded-md divide-y'>
-                                        {/* Mock order items */}
                                         {[1, 2, 3].map((item) => (
                                              <div
                                                   key={item}

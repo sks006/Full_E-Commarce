@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 import { Product } from '@/types/schema';
 
-const API_URL = `${import.meta.env.VITE_URL}/products`;
+const API_URL = `${import.meta.env.VITE_API_URL}/products`;
 
 interface ProductsState {
   items: Product[];
@@ -37,6 +37,7 @@ export const fetchProducts = createAsyncThunk(
   'products/fetchProduct',
   async () => {
     try {
+      console.log("🚀 Thunk started: fetchProducts");
       const response = await axios.get(API_URL);
       console.log(response.data)
       return response.data; 
@@ -51,7 +52,7 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
-export const fetchProductById = createAsyncThunk('product/fetchProductsById',
+export const fetchProductById = createAsyncThunk('products/fetchProductsById',
   async(id:number) => {
     try {
       const response = await axios.get(`${API_URL}/${id}`);
@@ -91,7 +92,7 @@ export const createProduct = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
   'products/updateProduct',
-  async ({ id, updatedData }: { id: number; updatedData: any }) => {
+  async ({ id, updatedData }: { id: number; updatedData: Product }) => {
     try {
       const response = await axios.post(`${API_URL}/update/${id}`, updatedData, {
         headers: {
