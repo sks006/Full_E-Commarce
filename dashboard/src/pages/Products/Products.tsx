@@ -1,6 +1,7 @@
 /** @format */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, } from "react";
+import { useNavigate } from "react-router-dom";
 import {
      ChevronDown,
      Download,
@@ -24,7 +25,7 @@ import {
      setSelectedProduct,
      updateFilters,
      deleteProduct,
-} from "@/slicer/products/productsSlice";
+} from "../../slicer/products/productsSlice";
 import {
      Dialog,
      DialogContent,
@@ -41,6 +42,7 @@ export function Products() {
      const { items, status, selectedProduct, filters } = useAppSelector(
           (state) => state.products,
      );
+     const navigate = useNavigate();
      const [productDetailsOpen, setProductDetailsOpen] = useState(false);
      const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
      const [productToDelete, setProductToDelete] = useState<number | null>(
@@ -49,9 +51,7 @@ export function Products() {
 
      useEffect(() => {
           if (status === "idle") {
-               console.log(
-                    "✅ useEffect triggered — status is idle, dispatching fetchProducts",
-               );
+
                dispatch(fetchProducts());
           }
      }, [dispatch, status]);
@@ -66,6 +66,11 @@ export function Products() {
           setProductToDelete(product_id);
           setIsDeleteDialogOpen(true);
      };
+
+const handelCreateClick = () => {
+     navigate("/products/create");
+}
+
 
      const confirmDelete = () => {
           if (productToDelete) {
@@ -113,7 +118,11 @@ export function Products() {
                               <Download className='h-4 w-4' />
                               Export
                          </Button>
-                         <Button className='gap-2'>
+                         <Button
+                              className='gap-2'
+                              onClick={() => {
+                                   handelCreateClick();
+                              }}>
                               <Plus className='h-4 w-4' />
                               Add Product
                          </Button>
@@ -241,7 +250,7 @@ export function Products() {
                                              </tr>
                                         </thead>
                                         <tbody className='[&_tr:last-child]:border-0'>
-                                             {items.map((product) => (
+                                             {(items || []).map((product) => (
                                                   <tr
                                                        key={product.id}
                                                        className='border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted cursor-pointer'
@@ -447,18 +456,23 @@ export function Products() {
                                         value='images'
                                         className='space-y-4'>
                                         <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                                             {[1, 2, 3].map((i) => (
+                                             {(
+                                                  selectedProduct.images?.split(
+                                                       ",",
+                                                  
+                                             ).map((image: string, index: number) => (
                                                   <div
-                                                       key={i}
-                                                       className='border rounded-md overflow-hidden'>
-                                                       <div className='aspect-square bg-muted flex items-center justify-center'>
-                                                            <span className='text-muted-foreground'>
-                                                                 Image
-                                                                 placeholder
-                                                            </span>
-                                                       </div>
+                                                       key={index}
+                                                       className='flex items-center justify-center h-32 bg-gray-200 rounded-md'>
+                                                       <img
+                                                            src={image}
+                                                            alt={`Product Image ${
+                                                                 index + 1
+                                                            }`}
+                                                            className='object-cover h-full w-full rounded-md'
+                                                       />
                                                   </div>
-                                             ))}
+                                             )))}
                                         </div>
                                    </TabsContent>
                               </Tabs>

@@ -5,7 +5,7 @@ import { store } from '@/store';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Dashboard } from '@/pages/Dashboard';
 import { Products } from '@/pages/Products/Products';
-import  CreateProducts  from '@/pages/Products/create';
+import  {CreateProduct}  from '@/pages/Products/create';
 import  EditProduct  from '@/pages/Products/update';
 import { Orders } from '@/pages/Orders/Orders';
 import { Customers } from '@/pages/Customers/Customers';
@@ -35,7 +35,7 @@ function App() {
 
               
               <Route path="/products" element={<Products />} />
-              <Route path="/products/create" element={<CreateProducts />} />
+              <Route path="/products/create" element={<CreateProduct/>} />
               <Route path="/products/edit/:id" element={<EditProduct />} />
 
               

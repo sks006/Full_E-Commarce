@@ -2,7 +2,7 @@
 
 // Removed duplicate import of configureStore
 import { configureStore } from "@reduxjs/toolkit";
-import productsReducer from "@/slicer/products/productsSlice";
+import productsReducer from "../slicer/products/productsSlice";
 import ordersReducer from "@/slicer/orders/ordersSlice";
 import customersReducer from "@/slicer/customers/customersSlice";
 import paymentsReducer from "@/slicer/payments/paymentsSlice";

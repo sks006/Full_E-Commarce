@@ -37,9 +37,8 @@ export const fetchProducts = createAsyncThunk(
   'products/fetchProduct',
   async () => {
     try {
-      console.log("🚀 Thunk started: fetchProducts");
       const response = await axios.get(API_URL);
-      console.log(response.data)
+     console.log(response.data); // Log the response data
       return response.data; 
 
     } catch (error) {
@@ -68,26 +67,29 @@ export const fetchProductById = createAsyncThunk('products/fetchProductsById',
     }
   }
 )
-export const createProduct = createAsyncThunk(
-  'products/createProduct',
-  async (productData) => {
-    try {
-      const response = await axios.post(`${API_URL}/save`, productData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      return response.data.brand; // Assuming response.data.brand contains the created brand
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (axios.isAxiosError(error)) {
-          return Promise.reject(error.response ? error.response.data : error.message);
-        }
-        return Promise.reject('An unknown error occurred');
-      }
-      return Promise.reject('An unknown error occurred');
-    }
-  }
+export const createProduct = createAsyncThunk<Product, FormData>(
+     "products/createProduct",
+     async (productData, thunkAPI) => {
+          try {
+               const response = await axios.post(
+                    `${API_URL}/save`,
+                    productData,
+                    {
+                         headers: {
+                              "Content-Type": "multipart/form-data",
+                         },
+                    },
+               );
+               return response.data as Product;
+          } catch (error) {
+               if (axios.isAxiosError(error)) {
+                    return thunkAPI.rejectWithValue(
+                         error.response?.data || error.message,
+                    );
+               }
+               return thunkAPI.rejectWithValue("An unknown error occurred");
+          }
+     },
 );
 
 export const updateProduct = createAsyncThunk(
@@ -149,7 +151,7 @@ const productsSlice = createSlice({
     })
     .addCase(fetchProducts.fulfilled, (state, action) => {
       state.status = 'succeeded';
-      state.items = action.payload.items;
+      state.items = action.payload;
     })
     .addCase(fetchProducts.rejected, (state, action) => {
       state.status = 'failed';
