@@ -181,6 +181,7 @@ const deleteProductsImages = async (req, res) => {
 
 const deleteById = async (req, res) => {
      try {
+         
           const { id } = req.params;
           const Product = await db.Products.findByPk(id);
 

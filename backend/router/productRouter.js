@@ -34,6 +34,6 @@ router.put(
      updateById,
 );
 router.delete("/deleteProductsImages/:id/images", deleteProductsImages);
-router.delete("/deleteById/:id", deleteById);
+router.delete("/delete/:id", deleteById);
 
 module.exports = router;

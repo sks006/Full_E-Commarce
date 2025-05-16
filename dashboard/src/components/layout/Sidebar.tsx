@@ -217,7 +217,7 @@ export function Sidebar() {
      return (
           <aside
                className={cn(
-                    "flex flex-col border-r bg-background transition-all duration-300 h-screen sticky top-0",
+                    "flex flex-col border-r bg-background transition-all duration-300 h-screen sticky top-0 ",
                     isCollapsed ? "w-16" : "w-64",
                )}>
                <div

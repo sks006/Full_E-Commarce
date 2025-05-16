@@ -37,6 +37,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Product } from "@/types/schema";
 
+
 export function Products() {
      const dispatch = useAppDispatch();
      const { items, status, selectedProduct, filters } = useAppSelector(
@@ -44,10 +45,8 @@ export function Products() {
      );
      const navigate = useNavigate();
      const [productDetailsOpen, setProductDetailsOpen] = useState(false);
-     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-     const [productToDelete, setProductToDelete] = useState<number | null>(
-          null,
-     );
+   
+    
 
      useEffect(() => {
           if (status === "idle") {
@@ -63,8 +62,16 @@ export function Products() {
 
      const handleDeleteClick = (e: React.MouseEvent, product_id: number) => {
           e.stopPropagation();
-          setProductToDelete(product_id);
-          setIsDeleteDialogOpen(true);
+          console.log("Deleting product with ID: ", product_id);
+          
+          dispatch(deleteProduct(product_id))
+
+          .then(() => {
+               dispatch(fetchProducts());
+          })
+          .catch((error) => {
+               console.error("Failed to delete product: ", error);
+          });
      };
 
 const handelCreateClick = () => {
@@ -72,13 +79,7 @@ const handelCreateClick = () => {
 }
 
 
-     const confirmDelete = () => {
-          if (productToDelete) {
-               dispatch(deleteProduct(productToDelete));
-               setIsDeleteDialogOpen(false);
-               setProductToDelete(null);
-          }
-     };
+
 
      const formatCurrency = (amount: number) => {
           return new Intl.NumberFormat("en-US", {
@@ -313,6 +314,7 @@ const handelCreateClick = () => {
                                                                            handleDeleteClick(
                                                                                 e,
                                                                                 product.id,
+                                                                                
                                                                            )
                                                                       }>
                                                                       <Trash2 className='mr-2 h-4 w-4' />
@@ -460,12 +462,12 @@ const handelCreateClick = () => {
                                                   selectedProduct.images?.split(
                                                        ",",
                                                   
-                                             ).map((image: string, index: number) => (
+                                             ).map((images: string, index: number) => (
                                                   <div
                                                        key={index}
                                                        className='flex items-center justify-center h-32 bg-gray-200 rounded-md'>
                                                        <img
-                                                            src={image}
+                                                            src={images}
                                                             alt={`Product Image ${
                                                                  index + 1
                                                             }`}
@@ -491,27 +493,7 @@ const handelCreateClick = () => {
                     </Dialog>
                )}
 
-               {/* Delete Confirmation Dialog */}
-               <Dialog
-                    open={isDeleteDialogOpen}
-                    onOpenChange={setIsDeleteDialogOpen}>
-                    <DialogContent>
-                         <DialogHeader>
-                              <DialogTitle>Confirm Deletion</DialogTitle>
-                         </DialogHeader>
-                         <p>Are you sure you want to delete this product?</p>
-                         <DialogFooter>
-                              <DialogClose asChild>
-                                   <Button variant='outline'>Cancel</Button>
-                              </DialogClose>
-                              <Button
-                                   variant='destructive'
-                                   onClick={confirmDelete}>
-                                   Delete
-                              </Button>
-                         </DialogFooter>
-                    </DialogContent>
-               </Dialog>
+             
           </div>
      );
 }

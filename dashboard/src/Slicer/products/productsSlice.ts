@@ -119,7 +119,8 @@ export const deleteProduct = createAsyncThunk(
   'products/deleteProduct',
   async (id: number, { rejectWithValue }) => {  // Explicit number type
     try {
-      await axios.get(`${API_URL}/delete/${id}`);
+      console.log('Deleting in is now productSlicer:', id); // Log the ID being deleted
+      await axios.delete(`${API_URL}/delete/${id}`);
       return id; // Returns number
     } catch (error) {
       if (axios.isAxiosError(error)) {
