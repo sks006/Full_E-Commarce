@@ -94,7 +94,7 @@ export const createProduct = createAsyncThunk<Product, FormData>(
 
 export const updateProduct = createAsyncThunk(
   'products/updateProduct',
-  async ({ id, updatedData }: { id: number; updatedData: Product }) => {
+  async ({ id, updatedData }: { id: number; updatedData: Product}) => {
     try {
       const response = await axios.post(`${API_URL}/update/${id}`, updatedData, {
         headers: {

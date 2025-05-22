@@ -123,7 +123,7 @@ const updateById = async (req, res) => {
                updatedFields.images = updatedFields.images.concat(newImages);
           }
 
-          await Products.update(updatedFields);
+          await Product.update(updatedFields);
 
           res.status(200).json(Product);
      } catch (error) {

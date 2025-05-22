@@ -45,8 +45,9 @@ export function Products() {
      );
      const navigate = useNavigate();
      const [productDetailsOpen, setProductDetailsOpen] = useState(false);
-   
-    
+     
+
+
 
      useEffect(() => {
           if (status === "idle") {
@@ -54,6 +55,11 @@ export function Products() {
                dispatch(fetchProducts());
           }
      }, [dispatch, status]);
+
+     const handleEditClick = (productId: number) => {
+
+          navigate(`./update/${productId}`);
+     };
 
      const handleRowClick = (product: Product) => {
           dispatch(setSelectedProduct(product));
@@ -63,20 +69,20 @@ export function Products() {
      const handleDeleteClick = (e: React.MouseEvent, product_id: number) => {
           e.stopPropagation();
           console.log("Deleting product with ID: ", product_id);
-          
+
           dispatch(deleteProduct(product_id))
 
-          .then(() => {
-               dispatch(fetchProducts());
-          })
-          .catch((error) => {
-               console.error("Failed to delete product: ", error);
-          });
+               .then(() => {
+                    dispatch(fetchProducts());
+               })
+               .catch((error) => {
+                    console.error("Failed to delete product: ", error);
+               });
      };
 
-const handelCreateClick = () => {
-     navigate("/products/create");
-}
+     const handelCreateClick = () => {
+          navigate("/products/create");
+     }
 
 
 
@@ -296,14 +302,13 @@ const handelCreateClick = () => {
                                                                  <Button
                                                                       variant='default'
                                                                       size='sm'
-                                                                      onClick={(
-                                                                           e,
-                                                                      ) => {
-                                                                           e.stopPropagation();
-                                                                           // Edit logic
+                                                                      onClick={() => {
+                                                                           handleEditClick(
+                                                                                product.id,
+                                                                           );
                                                                       }}>
                                                                       <Plus className='mr-2 h-4 w-4' />
-                                                                      Create
+                                                                      Update
                                                                  </Button>
                                                                  <Button
                                                                       variant='destructive'
@@ -314,7 +319,6 @@ const handelCreateClick = () => {
                                                                            handleDeleteClick(
                                                                                 e,
                                                                                 product.id,
-                                                                                
                                                                            )
                                                                       }>
                                                                       <Trash2 className='mr-2 h-4 w-4' />
@@ -458,23 +462,61 @@ const handelCreateClick = () => {
                                         value='images'
                                         className='space-y-4'>
                                         <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                                             {(
-                                                  selectedProduct.images?.split(
-                                                       ",",
-                                                  
-                                             ).map((images: string, index: number) => (
-                                                  <div
-                                                       key={index}
-                                                       className='flex items-center justify-center h-32 bg-gray-200 rounded-md'>
-                                                       <img
-                                                            src={images}
-                                                            alt={`Product Image ${
-                                                                 index + 1
-                                                            }`}
-                                                            className='object-cover h-full w-full rounded-md'
-                                                       />
-                                                  </div>
-                                             )))}
+                                             {(() => {
+                                                  try {
+                                                       const imageArray =
+                                                            JSON.parse(
+                                                                 selectedProduct.images,
+                                                            ); // Parse JSON string
+                                                       if (
+                                                            !Array.isArray(
+                                                                 imageArray,
+                                                            )
+                                                       )
+                                                            return null;
+
+                                                       return imageArray
+                                                            .filter(
+                                                                 (
+                                                                      url: string,
+                                                                 ) =>
+                                                                      url.trim() !==
+                                                                      "",
+                                                            )
+                                                            .map(
+                                                                 (
+                                                                      image: string,
+                                                                      index: number,
+                                                                 ) => (
+                                                                      <div
+                                                                           key={
+                                                                                index
+                                                                           }
+                                                                           className='flex items-center justify-center h-32 bg-gray-200 rounded-md overflow-hidden'>
+                                                                           <img
+                                                                                src={image.trim()}
+                                                                                alt={`Product Image ${
+                                                                                     index +
+                                                                                     1
+                                                                                }`}
+                                                                                className='object-cover h-full w-full rounded-md'
+                                                                           />
+                                                                      </div>
+                                                                 ),
+                                                            );
+                                                  } catch (error) {
+                                                       console.error(
+                                                            "Invalid image format",
+                                                            error,
+                                                       );
+                                                       return (
+                                                            <p className='text-red-500'>
+                                                                 Failed to load
+                                                                 images
+                                                            </p>
+                                                       );
+                                                  }
+                                             })()}
                                         </div>
                                    </TabsContent>
                               </Tabs>
@@ -487,13 +529,16 @@ const handelCreateClick = () => {
                                              Close
                                         </Button>
                                    </DialogClose>
-                                   <Button>Edit Product</Button>
+                                   <Button
+                                        onClick={() =>
+                                             handleEditClick(selectedProduct.id)
+                                        }>
+                                        Edit Product
+                                   </Button>
                               </DialogFooter>
                          </DialogContent>
                     </Dialog>
                )}
-
-             
           </div>
      );
 }

@@ -26,8 +26,8 @@ router.post(
      validate,
      save,
 );
-router.put(
-     "/updateById/:id",
+router.post(
+     "/update/:id",
      upload.array("images", 5),
      productValidationRules,
      validate,

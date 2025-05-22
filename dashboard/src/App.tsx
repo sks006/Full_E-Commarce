@@ -6,7 +6,7 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Dashboard } from '@/pages/Dashboard';
 import { Products } from '@/pages/Products/Products';
 import  {CreateProduct}  from '@/pages/Products/create';
-import  EditProduct  from '@/pages/Products/update';
+import { UpdateProduct } from "@/pages/Products/update";
 import { Orders } from '@/pages/Orders/Orders';
 import { Customers } from '@/pages/Customers/Customers';
 import { Payments } from '@/pages/Payments/Payments';
@@ -19,38 +19,71 @@ import SellerDetails from '@/pages/Seller/SellerDetails';
 
 function App() {
   return (
-    <Provider store={store}>
-      <ThemeProvider defaultTheme="light" storageKey="ui-theme">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route element={<DashboardLayout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-             
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/customers" element={<Customers />} />
-              <Route path="/payments" element={<Payments />} />
-              <Route path="/categories" element={<Categories />} />
-              <Route path="/seller" element={<Seller />} />
+       <Provider store={store}>
+            <ThemeProvider defaultTheme='light' storageKey='ui-theme'>
+                 <BrowserRouter>
+                      <Routes>
+                           <Route
+                                path='/'
+                                element={<Navigate to='/dashboard' replace />}
+                           />
+                           <Route element={<DashboardLayout />}>
+                                <Route
+                                     path='/dashboard'
+                                     element={<Dashboard />}
+                                />
 
-              
-              <Route path="/products" element={<Products />} />
-              <Route path="/products/create" element={<CreateProduct/>} />
-              <Route path="/products/edit/:id" element={<EditProduct />} />
+                                <Route path='/orders' element={<Orders />} />
+                                <Route
+                                     path='/customers'
+                                     element={<Customers />}
+                                />
+                                <Route
+                                     path='/payments'
+                                     element={<Payments />}
+                                />
+                                <Route
+                                     path='/categories'
+                                     element={<Categories />}
+                                />
+                                <Route path='/seller' element={<Seller />} />
 
-              
-              <Route path="/orders/:id" element={<OrderDetails />} />
-              <Route path="/customers/:id" element={<CustomerDetails />} />
-              <Route path="/payments/:id" element={<PaymentDetails />} />
-           
-              <Route path="/seller/:id" element={<SellerDetails />} />
-              {/* Add more routes as needed */}
+                                <Route
+                                     path='/products'
+                                     element={<Products />}
+                                />
+                                <Route
+                                     path='/products/create'
+                                     element={<CreateProduct />}
+                                />
+                                <Route
+                                     path='/products/update/:id'
+                                     element={<UpdateProduct />}
+                                />
 
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
-    </Provider>
+                                <Route
+                                     path='/orders/:id'
+                                     element={<OrderDetails />}
+                                />
+                                <Route
+                                     path='/customers/:id'
+                                     element={<CustomerDetails />}
+                                />
+                                <Route
+                                     path='/payments/:id'
+                                     element={<PaymentDetails />}
+                                />
+
+                                <Route
+                                     path='/seller/:id'
+                                     element={<SellerDetails />}
+                                />
+                                {/* Add more routes as needed */}
+                           </Route>
+                      </Routes>
+                 </BrowserRouter>
+            </ThemeProvider>
+       </Provider>
   );
 }
 
