@@ -2,14 +2,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import priceRangeReducer from '../slicer/priceRangeSlice';
 import brandFilterReducer from '../slicer/brandFilterSlice';
-import { filterApi } from '../slicer/filterService';
-import productSlicer from '../slicer/productSlicer';
+import { filterApi } from '@/slicer/filterService';
+import productSlicer from '@/slicer/productSlicer';
 
 export const store = configureStore({
   reducer: {
     priceRange: priceRangeReducer,
     brandFilter: brandFilterReducer,
-    product: productSlicer,
+    products: productSlicer,
 
     [filterApi.reducerPath]: filterApi.reducer,
   },

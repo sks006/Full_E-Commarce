@@ -3,10 +3,11 @@ import Layout from "@/components/layout/Layout";
 import HeroBanner from "@/components/home/HeroBanner";
 import PromotionBanner from "@/components/home/PromotionBanner";
 import CategoryGrid from "@/components/home/CategoryGrid";
-import TrendingProductSection from "@/components/home/TrendingProductSection";
-import WeeklyOfferSection from "@/components/home/WeeklyOfferSection";
-import SummerCollection from "@/components/home/SummerCollection";
-import BrandShowcase from "@/components/home/BrandShowcase";
+// import TrendingProductSection from "@/components/home/TrendingProductSection";
+// import WeeklyOfferSection from "@/components/home/WeeklyOfferSection";
+
+// import BrandShowcase from "@/components/home/BrandShowcase";
+import AllCollection from "@/components/product/AllCollection";
 
 const Index = () => {
   return (
@@ -14,10 +15,10 @@ const Index = () => {
       <HeroBanner />
       <PromotionBanner />
       <CategoryGrid />
-      <TrendingProductSection />
-      <WeeklyOfferSection />
-      <SummerCollection />
-      <BrandShowcase />
+      {/* <TrendingProductSection />
+      <WeeklyOfferSection /> */}
+      <AllCollection />
+      {/* <BrandShowcase /> */}
     </Layout>
   );
 };

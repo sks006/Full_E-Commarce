@@ -116,6 +116,7 @@ export function DataTable<T extends { id: string }>({
                                                        key={`${item.id}-${col.accessorKey}`}>
                                                        {col.cell
                                                             ? col.cell(item)
+                                                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                                             : (item as any)[
                                                                    col
                                                                         .accessorKey
