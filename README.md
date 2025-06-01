@@ -5,6 +5,7 @@ This project is a full-stack web application consisting of a React frontend (`da
 ---
 
 ## 📁 Folder Structure
+````bash
 project-root/
 ├── backend/
 │   ├── .env               # Environment variables (not committed)
@@ -35,7 +36,7 @@ project-root/
 │
 ├── .gitignore             # Ignore .env, node_modules, build folders, etc.
 ├── README.md              # Project overview and setup guide
-
+````
 
 ---
 
