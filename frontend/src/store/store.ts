@@ -5,6 +5,7 @@ import brandFilterReducer from '../slicer/brandFilterSlice';
 import { filterApi } from '@/slicer/filterService';
 import productSlicer from '@/slicer/productSlicer';
 
+
 export const store = configureStore({
   reducer: {
     priceRange: priceRangeReducer,

@@ -2,11 +2,12 @@
 
 // Removed duplicate import of configureStore
 import { configureStore } from "@reduxjs/toolkit";
-import productsReducer from "../slicer/products/productsSlice";
-import ordersReducer from "@/slicer/orders/ordersSlice";
-import customersReducer from "@/slicer/customers/customersSlice";
-import paymentsReducer from "@/slicer/payments/paymentsSlice";
-import authReducer from "@/slicer/auth/authSlice";
+import productsReducer from "@/Slicer/products/productsSlice";
+import ordersReducer from "@/Slicer/orders/ordersSlice";
+import customersReducer from "@/Slicer/customers/customersSlice";
+import paymentsReducer from "@/Slicer/payments/paymentsSlice";
+import authReducer from "@/Slicer/auth/authSlice";
+
 
 export const store = configureStore({
      reducer: {
@@ -21,3 +22,4 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+

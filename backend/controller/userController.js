@@ -97,24 +97,28 @@ const loginUser = async (req, res) => {
           const { accessToken, refreshToken } =
                await generateAccessAndRefreshTokens(user.id);
 
-          // Cookie options for both tokens
-          const commonCookieOptions = {
-               httpOnly: true,
-               secure: process.env.NODE_ENV === "development" ? false : true, // Set to true in production
-               sameSite: "Strict",
+          const getCookieOptions = (maxAge) => {
+               const isDev = process.env.NODE_ENV === "development";
+
+               return {
+                    httpOnly: true,
+                    secure: !isDev,
+                    sameSite: isDev ? "Lax" : "None",
+                    maxAge,
+               };
           };
 
-          // Set access token cookie (short-lived)
-          res.cookie("accessToken", accessToken, {
-               ...commonCookieOptions,
-               maxAge: 15 * 60 * 1000, // 15 minutes
-          });
-
-          // Set refresh token cookie (long-lived)
-          res.cookie("refreshToken", refreshToken, {
-               ...commonCookieOptions,
-               maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-          });
+          // Usage
+          res.cookie(
+               "accessToken",
+               accessToken,
+               getCookieOptions(15 * 60 * 1000),
+          );
+          res.cookie(
+               "refreshToken",
+               refreshToken,
+               getCookieOptions(7 * 24 * 60 * 60 * 1000),
+          );
 
           // Return user data and access token in response
           return res.status(200).json({

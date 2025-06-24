@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useAppDispatch } from "@/store/hooks";
-import { logout } from "../../slicer/auth/authSlice";
+import { logoutUser } from "../../Slicer/auth/authSlice";
 
 interface SidebarNavProps {
      isCollapsed: boolean;
@@ -32,7 +32,7 @@ const SidebarNav = ({ isCollapsed }: SidebarNavProps) => {
      const dispatch = useAppDispatch();
 
      const handleLogout = () => {
-          dispatch(logout());
+          dispatch(logoutUser());
      };
 
      return (

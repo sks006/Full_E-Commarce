@@ -4,7 +4,7 @@ import { useState, useRef, ChangeEvent } from "react";
 import { Plus, Upload, X, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/store/hooks";
-import { createProduct } from "@/slicer/products/productsSlice";
+import { createProduct } from "@/Slicer/products/productsSlice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

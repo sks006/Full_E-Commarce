@@ -12,10 +12,10 @@ import {
 import { Card } from "@/components/ui/card";
 import { StatCard } from "@/components/common/StatCard";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchProducts } from "@/slicer/products/productsSlice";
-import { fetchOrders } from "@/slicer/orders/ordersSlice";
-import { fetchCustomers } from "@/slicer/customers/customersSlice";
-import { fetchPayments } from "@/slicer/payments/paymentsSlice";
+import { fetchProducts } from "@/Slicer/products/productsSlice";
+import { fetchOrders } from "@/Slicer/orders/ordersSlice";
+import { fetchCustomers } from "@/Slicer/customers/customersSlice";
+import { fetchPayments } from "@/Slicer/payments/paymentsSlice";
 import {
      ResponsiveContainer,
      BarChart,
